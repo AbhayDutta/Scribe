@@ -2,7 +2,7 @@
 
 # Scribe
 
-Generate timestamped notes automatically while watching coding tutorials.
+### Multimodal note engine for technical YouTube videos
 
 </div>
 
@@ -10,36 +10,33 @@ Generate timestamped notes automatically while watching coding tutorials.
 
 ## Overview
 
-Scribe is a browser extension that analyzes video transcript and on-screen content to generate structured, timestamped notes in real time — so you don't have to pause and type while learning.
+Watching long tutorials usually means pausing every few minutes to take notes or copy code from the screen.
+
+Scribe sits inside YouTube and combines what's said with what's on screen into structured, timestamped notes.
+
+- **Spoken audio** — extracts timestamped explanations from captions
+- **Screen vision** — captures diagrams, code, and terminal output
+- **Synthesis** — merges both into a single structured note
+- **Export** — Markdown, PDF, or Word
 
 ## Features
 
-- Automatic note generation from video transcript and on-screen content
-- Click any note to jump directly to that moment in the video
-- Manual note-taking via hotkey
-- Export notes as Markdown
+- Click any note to jump to that moment in the video
+- Manual note capture via hotkey
+- Notes highlight in sync with playback
+- Export to Markdown / PDF / Word
 
 ## Tech Stack
 
-| Layer      | Technology            |
-|------------|------------------------|
-| Frontend   | TypeScript, React      |
-| Backend    | Go                     |
-| Storage    | Local storage           |
-
-## Project Structure
-scribe/
-├── extension/ # Browser extension (TypeScript, React)
-└── backend/ # Go API server
+| Layer    | Technology       |
+|----------|-------------------|
+| Frontend | TypeScript, React |
+| Backend  | Go                |
+| Storage  | Local storage      |
 
 ## Getting Started
 
-### Prerequisites
-
-- Node.js v18+
-- Go v1.21+
-
-### Backend
+**Backend**
 
 ```bash
 cd backend
@@ -47,7 +44,7 @@ cp .env.example .env
 go run main.go
 ```
 
-### Extension
+**Extension**
 
 ```bash
 cd extension
@@ -55,7 +52,14 @@ npm install
 npm run build
 ```
 
-Load the `extension/dist` folder as an unpacked extension in your browser's extensions page.
+Load `extension/dist` as an unpacked extension in your browser's extensions page.
+
+## Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| Alt + S | Toggle sidebar |
+| Alt + N | Quick note capture |
 
 ## Status
 
