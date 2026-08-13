@@ -1,10 +1,10 @@
 /**
  * Scribe Extension Configuration
- * Build-time environment variable support for cloud hosting
+ * Default production backend URL on Render
  */
 
 export const ENV_BACKEND_URL =
   (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_BACKEND_URL) ||
-  'http://localhost:8080';
+  'https://scribe-w2xi.onrender.com';
 
 export const APP_VERSION = '1.0.0';
