@@ -1,163 +1,109 @@
-# 🖋️ Scribe — Multimodal AI Video Note Engine
+<div align="center">
 
-> **Turn any technical YouTube tutorial or lecture into structured, clean developer notes with live screen vision and audio transcript synthesis.**
+# `Scribe`
 
-[![Go Version](https://img.shields.io/badge/Go-1.24-00ADD8?logo=go&logoColor=white)](https://go.dev/)
-[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)](backend/Dockerfile)
+### Intelligent, multimodal note engine for technical YouTube videos.
 
----
+<p align="center">
+  <img src="https://img.shields.io/badge/Go_1.24-00ADD8?style=for-the-badge&logo=go&logoColor=white" alt="Go" />
+  <img src="https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TS" />
+  <img src="https://img.shields.io/badge/Gemini_Flash-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="Gemini" />
+  <img src="https://img.shields.io/badge/License-MIT-black?style=for-the-badge" alt="License" />
+</p>
 
-## 🌟 Overview
-
-**Scribe** is an intelligent browser extension (Chrome Manifest V3) paired with a lightweight, high-performance Go backend. While you watch coding tutorials, university lectures, or technical presentations on YouTube, Scribe automatically watches alongside you:
-
-1. **🎙️ Spoken Audio**: Parses spoken concepts from YouTube captions and timing windows.
-2. **🖥️ Visual Screen Analysis**: Captures slide diagrams, terminal code, and architecture diagrams.
-3. **🧠 Multimodal Fusion**: Merges what the instructor said with what is on screen into structured takeaways, numbered key points, and runnable code blocks.
-4. **📄 Export Anywhere**: Download study notes instantly as **PDF Documents**, **Microsoft Word (`.doc`)**, or **Markdown (`.md`)**.
+<p align="center">
+  Synthesizes spoken audio transcripts with real-time screen vision into structured, interactive study notes and runnable code blocks.
+</p>
 
 ---
 
-## 🏗️ Architecture Pipeline
+</div>
 
-```mermaid
-flowchart LR
-    A[YouTube Video Player] -->|HTML5 Canvas| B[Frame Capture Engine]
-    A -->|Transcript API| C[Spoken Audio Chunks]
-    
-    B -->|Base64 Frame| D[Scribe Go Backend]
-    C -->|Timestamped Text| D
-    
-    D -->|Multimodal Fusion| E{LLM Provider}
-    E -->|Gemini Flash / GPT-4o / Claude| D
-    
-    D -->|Structured Notes JSON| F[Scribe Extension UI]
-    F -->|Live Synced Highlight| G[Timeline & Syllabus Tree]
-    F -->|PDF / Word / Markdown| H[Export Document]
-```
+## Overview
+
+Watching 2-hour technical lectures or coding tutorials usually means pausing every few minutes to take notes or copy code snippets from the screen.
+
+**Scribe** sits directly inside YouTube:
+- 🎙️ **Spoken Audio**: Extracts timestamped explanations from captions.
+- 🖥️ **Screen Vision**: Captures slide diagrams, terminal code, and architecture schemas.
+- 🧠 **Multimodal Synthesis**: Fuses what the instructor said with what is on screen into structured takeaways.
+- 📑 **Export**: Download as **PDF**, **Microsoft Word (`.doc`)**, or **Markdown (`.md`)**.
 
 ---
 
-## ✨ Features
+## Key Highlights
 
-- **🌓 Minimal Dark & Light Mode**: Deep pure black (`#09090b`) theme designed for developers, with a crisp light theme toggle.
-- **🎵 Synced Playback Active Highlighting**: Notes glow with an indigo accent indicator in real-time as the video timestamp matches the note.
-- **🎯 In-Video Floating Quick Capture (`Alt+N`)**: Spotlight overlay centered over the video canvas for instant note taking without leaving theater/fullscreen mode.
-- **💬 Interactive AI Command Bar**: Type *"Summarize slide on screen"* or *"Extract algorithm steps"* to query Gemini / GPT-4o live on current video context.
-- **🗂️ Dual View Modes**:
-  - **`Timeline`**: Chronological stream with source badges (💬 *spoken*, 🖥️ *screen*, ✍️ *manual*, ✨ *ai*).
-  - **`Syllabus Tree`**: Hierarchical chapter outline with collapsible sections.
-- **📱 Redesigned Extension Popup**: Detects active YouTube video, tracks recent watch history, and provides one-click navigation.
-- **🛡️ Built-in Cost Protection & Rate Limiting**: In-memory token bucket rate limiter (30 req/min) and session frame guard (50 frames/video cap) to prevent runaway API billing.
+- **Dark Mode First**: Clean, pure-zinc interface built with `shadcn/ui` and `Framer Motion`.
+- **Active Playback Glow**: Notes subtly illuminate in real-time as the video reaches their timestamp.
+- **In-Video Spotlight (`Alt + N`)**: Floating capture modal over the player to jot thoughts without leaving fullscreen.
+- **AI Command Assistant**: Ask questions directly against the live video context (*"Summarize slide on screen"*).
+- **Dual View Modes**: Switch between chronological **Timeline** and hierarchical **Syllabus Tree**.
+- **Cost Guarded**: Built-in token-bucket rate limiting (30 req/min) and session frame caps.
 
 ---
 
-## 🚀 Quickstart Guide
+## Quickstart
 
-### 1. Prerequisites
-- [Go 1.21+](https://go.dev/dl/)
-- [Node.js 18+](https://nodejs.org/) & `npm`
-- Google Gemini API Key (Free tier available at [Google AI Studio](https://aistudio.google.com/)) or OpenAI / Anthropic key.
-
----
-
-### 2. Backend Setup
+### 1. Start the Backend
 
 ```bash
-# 1. Navigate to backend directory
 cd backend
-
-# 2. Copy environment template
 cp .env.example .env
-
-# 3. Add your API key in .env
-# GEMINI_API_KEY=your_key_here
-# LLM_PROVIDER=gemini
-# MODEL_NAME=gemini-flash-latest
-
-# 4. Run tests
-go test -v ./...
-
-# 5. Start server
+# Add GEMINI_API_KEY in .env
 go run main.go
 ```
-The server will start on `http://localhost:8080`.
 
----
-
-### 3. Extension Setup
+### 2. Build the Chrome Extension
 
 ```bash
-# 1. Navigate to extension directory
 cd extension
-
-# 2. Install dependencies
 npm install
-
-# 3. Build extension
 npm run build
 ```
 
-#### Load Unpacked Extension in Chrome:
-1. Open Google Chrome and navigate to `chrome://extensions/`.
-2. Enable **Developer mode** (toggle in the top-right corner).
-3. Click **Load unpacked**.
-4. Select the `extension/dist` folder.
-5. Open any [YouTube Video](https://www.youtube.com/) to start taking notes!
+### 3. Load in Chrome
+
+1. Open `chrome://extensions/` and enable **Developer mode**.
+2. Click **Load unpacked** and select `extension/dist`.
+3. Open any [YouTube Video](https://www.youtube.com/) and press `Alt + S`.
 
 ---
 
-## 🐳 Docker & Cloud Deployment
+## Architecture
 
-### Run with Docker
-
-```bash
-# Build Docker image
-docker build -t scribe-backend ./backend
-
-# Run container
-docker run -p 8080:8080 -e GEMINI_API_KEY=your_key_here scribe-backend
+```
+YouTube Player (Video + Audio)
+       │
+       ├── Canvas Frame Capture ──┐
+       └── Transcript Stream ─────┼──► Scribe Go Backend (Gemini / Claude / GPT-4o)
+                                  │           │
+                                  │           ▼
+                                  └── Dynamic Sidebar & Outline UI
 ```
 
-### Deploy to Render / Railway
-
-- **Render**: Connect repository and deploy using included [`render.yaml`](render.yaml).
-- **Railway**: Deploy using [`railway.json`](railway.json) with 1-click Docker build.
-
-> When hosted in the cloud, update the backend URL inside the extension Settings modal or build with `VITE_BACKEND_URL=https://your-hosted-backend.com npm run build`.
-
 ---
 
-## ⚙️ Environment Variables Reference
-
-| Variable | Default | Description |
-| :--- | :--- | :--- |
-| `PORT` | `8080` | HTTP server port |
-| `LLM_PROVIDER` | `gemini` | Active provider (`gemini`, `openai`, `claude`, `mock`) |
-| `GEMINI_API_KEY` | `""` | Google Gemini API Key |
-| `MODEL_NAME` | `gemini-flash-latest` | Model identifier |
-| `OPENAI_API_KEY` | `""` | OpenAI API Key (if using OpenAI) |
-| `ANTHROPIC_API_KEY`| `""` | Anthropic API Key (if using Claude) |
-| `RATE_LIMIT_RPM` | `30` | Max requests per minute per client IP |
-| `MAX_FRAMES_PER_SESSION` | `50` | Max visual frames analyzed per video session |
-| `ALLOWED_ORIGINS` | `*` | CORS allowed origins |
-
----
-
-## ⌨️ Keyboard Shortcuts
+## Shortcuts
 
 | Shortcut | Action |
 | :--- | :--- |
-| **`Alt + S`** (or `Ctrl+Shift+S`) | Toggle Scribe Sidebar Drawer |
-| **`Alt + N`** (or `Ctrl+Shift+N`) | Open In-Video Spotlight Quick Note |
-| **`Enter`** | Save Note |
-| **`Esc`** | Dismiss Quick Note / Close Modal |
+| `Alt + S` | Toggle Scribe Sidebar |
+| `Alt + N` | In-Video Quick Spotlight Note |
+| `Enter` | Save Note |
+| `Esc` | Dismiss Spotlight / Modal |
 
 ---
 
-## 📄 License
+## Deploy Backend
 
-Distributed under the MIT License. See [`LICENSE`](LICENSE) for more information.
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app)
+
+Deploy instantly using the included [`Dockerfile`](backend/Dockerfile), [`render.yaml`](render.yaml), or [`railway.json`](railway.json).
+
+---
+
+<div align="center">
+  <sub>Built with ❤️ by <a href="https://github.com/AbhayDutta">Abhay Dutta</a> • Released under the MIT License</sub>
+</div>
