@@ -1,0 +1,65 @@
+{
+  "manifest_version": 3,
+  "name": "Scribe — AI YouTube Coding Notes",
+  "version": "1.0.0",
+  "description": "Automatically generates timestamped notes for YouTube coding tutorials using transcripts and visual screen analysis.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://*.youtube.com/*",
+    "http://localhost:8080/*"
+  ],
+  "action": {
+    "default_popup": "src/popup/index.html",
+    "default_title": "Scribe Notes",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.youtube.com/*",
+        "*://youtube.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "toggle-sidebar": {
+      "suggested_key": {
+        "default": "Alt+S",
+        "mac": "Alt+S"
+      },
+      "description": "Toggle Scribe Sidebar"
+    },
+    "capture-note": {
+      "suggested_key": {
+        "default": "Alt+N",
+        "mac": "Alt+N"
+      },
+      "description": "Capture manual note at current timestamp"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*", "icons/*"],
+      "matches": ["https://www.youtube.com/*"]
+    }
+  ]
+}

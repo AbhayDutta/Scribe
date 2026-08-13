@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: scribe-backend
+    env: docker
+    dockerfilePath: backend/Dockerfile
+    dockerContext: backend
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: LLM_PROVIDER
+        value: gemini
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: RATE_LIMIT_RPM
+        value: 30
+      - key: MAX_FRAMES_PER_SESSION
+        value: 50

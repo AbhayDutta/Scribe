@@ -1,0 +1,27 @@
+{
+  "name": "scribe-extension",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Scribe - AI-powered timestamped notes generator for YouTube coding tutorials",
+  "scripts": {
+    "dev": "node scripts/build.js",
+    "build": "tsc && node scripts/build.js"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "framer-motion": "^13.1.0",
+    "lucide-react": "^1.16.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.6.0"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.308",
+    "@types/node": "^22.13.1",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.3",
+    "vite": "^6.1.0"
+  }
+}

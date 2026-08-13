@@ -1,0 +1,10 @@
+.env
+*.exe
+*.exe~
+*.log
+.git
+.vscode
+.idea
+tmp/
+dist/
+node_modules/
