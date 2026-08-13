@@ -24,6 +24,21 @@ func main() {
 	mux := http.NewServeMux()
 
 	// Register API endpoints
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/" {
+			http.NotFound(w, r)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{
+			"service":   "Scribe Backend API",
+			"status":    "online",
+			"provider":  llmClient.ProviderName(),
+			"version":   "1.0.0",
+			"endpoints": []string{"/health", "/generate-notes", "/analyze-frame", "/merge-notes", "/ask-ai"},
+			"docs":      "https://github.com/AbhayDutta/Scribe",
+		})
+	})
 	mux.Handle("/health", handlers.NewHealthHandler(cfg, llmClient))
 	mux.Handle("/generate-notes", handlers.NewGenerateNotesHandler(llmClient))
 	mux.Handle("/analyze-frame", handlers.NewAnalyzeFrameHandler(llmClient, sessionGuard))
